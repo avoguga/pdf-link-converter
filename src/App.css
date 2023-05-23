@@ -49,3 +49,17 @@ a {
 a:hover {
   background-color: #218838;
 }
+
+.file-name {
+  margin-top: 1rem;
+  color: #666;
+  font-size: 16px;
+  transition: color 0.5s;
+  animation: filename 1s ease-in-out;
+}
+
+@keyframes filename {
+  0% { color: #666; }
+  50% { color: #333; }
+  100% { color: #666; }
+}
