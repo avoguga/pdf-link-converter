@@ -15,6 +15,12 @@ function App() {
   const [uploadComplete, setUploadComplete] = useState<boolean>(false);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Reset the upload state
+    setUploadProgress(null);
+    setUploadComplete(false);
+    setFileUrl(null);
+    setFileName(null);
+
     const file = e.target.files?.item(0);
     if (file) {
       const storage = getStorage(app);
