@@ -11,7 +11,7 @@ import { app } from "./firebase";
 function App() {
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
-  const [progress, setProgress] = useState<number>(0); // New state for upload progress
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [uploadComplete, setUploadComplete] = useState<boolean>(false);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,16 +21,13 @@ function App() {
       const storageRef = ref(storage, file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
-      // Listen for state changes, errors, and completion of the upload.
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          setProgress(progress); // Update the progress state
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
+          setUploadProgress(progress);
         },
         (error) => {
           console.error("Upload failed:", error);
@@ -57,13 +54,12 @@ function App() {
         />
         <label htmlFor="fileInput">Choose a PDF</label>
       </div>
-      {progress > 0 &&
-        progress < 100 && ( // Show progress bar when upload is in progress
-          <div className="progress-container">
-            <progress value={progress} max="100" />
-          </div>
-        )}
-      {fileUrl && (
+      {!uploadComplete && uploadProgress !== null && uploadProgress > 0 && (
+        <div className="progress-container">
+          <progress value={uploadProgress} max="100" />
+        </div>
+      )}
+      {uploadComplete && fileUrl && (
         <div className="loaded">
           <a href={fileUrl} target="_blank" rel="noopener noreferrer">
             View PDF
