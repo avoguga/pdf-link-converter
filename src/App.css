@@ -2,6 +2,7 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
   color: #333;
+  padding: 20px; /* Adds a bit of space around the body content */
 }
 
 .container {
@@ -24,8 +25,10 @@ input[type="file"] {
 }
 
 label {
+  display: inline-block; /* Changed from block */
   padding: 10px 20px;
-  background-color: #007BFF;
+  margin-bottom: 1rem; /* Adds space below the label */
+  background-color: #007bff;
   color: #fff;
   cursor: pointer;
   border-radius: 5px;
@@ -59,7 +62,54 @@ a:hover {
 }
 
 @keyframes filename {
-  0% { color: #666; }
-  50% { color: #333; }
-  100% { color: #666; }
+  0% {
+    color: #666;
+  }
+  50% {
+    color: #333;
+  }
+  100% {
+    color: #666;
+  }
+}
+
+.progress-container {
+  width: 100%;
+  height: 20px;
+  background: #ccc;
+  border-radius: 10px;
+  margin-top: 1rem; /* Adds space above the progress bar */
+}
+
+progress {
+  width: 100%;
+  height: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 10px;
+}
+
+progress[value]::-webkit-progress-bar {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+progress[value]::-webkit-progress-value {
+  background: #4caf50;
+  border-radius: 10px;
+}
+
+@keyframes loaded {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loaded {
+  animation: loaded 1s;
 }
